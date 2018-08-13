@@ -29,15 +29,17 @@ of flow commands to the openflow speaker (floodlight) to install the flow rules 
  a response is sent to the NB API.
 
 #### Sequence Diagram
+High Level Flow Creation:
+![High level Flow Creation](./flow-crud-create.png "Flow Creation")
 
-![Flow Creation](./flow-crud-create.png "Flow Creation")
-![Flow Creation](./flow-crud-create-full.png "Flow Creation (full)")
+Detailed Flow Creation:
+![Detailed Flow Creation](./flow-crud-create-full.png "Flow Creation (full)")
 
 #### Diagram Text
 
 This text can be used at https://www.websequencediagrams.com/
 
-[Diagram text](https://github.com/telstra/open-kilda/blob/develop/docs/design/usecase/flow-crud-create-full.txt)
+Diagram source file can be found [here](https://github.com/telstra/open-kilda/blob/develop/docs/design/usecase/flow-crud-create-full.txt)
  
 ### Flow Deletion
 ![Flow Delete](./flow-crud-delete-full.png "Flow Delete (full)")
@@ -45,7 +47,8 @@ This text can be used at https://www.websequencediagrams.com/
 #### Diagram Text
 
 This text can be used at https://www.websequencediagrams.com/
-[Diagram text](https://github.com/telstra/open-kilda/blob/develop/docs/design/usecase/flow-crud-delete-full.txt)
+
+Diagram source file can be found [here](https://github.com/telstra/open-kilda/blob/develop/docs/design/usecase/flow-crud-delete-full.txt)
 
 ### Flow Update
 TBD
