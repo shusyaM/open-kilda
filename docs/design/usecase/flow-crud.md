@@ -37,23 +37,7 @@ of flow commands to the openflow speaker (floodlight) to install the flow rules 
 
 This text can be used at https://www.websequencediagrams.com/
 
-```
-title Flow Creation
-
-User->NB API: createFlow (src,dst)
-NB API->FlowTopology: kafka.flow
-FlowTopology->PathComputationEngine: getPath
-loop install rules
-    FlowTopology->Speaker: kafka.speaker
-end
-alt success
-    FlowTopology->Neo4j: commit path
-end
-alt failure
-    FlowTopology->Neo4j: rollback path
-end
-NB API->User: result
-```     
+[Diagram text](https://github.com/telstra/open-kilda/blob/develop/docs/design/usecase/flow-crud-create-full.txt)
  
 ### Flow Deletion
 ![Flow Delete](./flow-crud-delete-full.png "Flow Delete (full)")
@@ -61,36 +45,12 @@ NB API->User: result
 #### Diagram Text
 
 This text can be used at https://www.websequencediagrams.com/
-
-```
-title Flow Creation
-
-Client -> NB: DELETE /flows/{flow-id}
-NB -> kilda.flow: CommandMessage(FlowDeleteRequest)
-kilda.flow -> SplitterBolt: CommandMessage(FlowDeleteRequest)
-SplitterBolt -> CrudBolt: CommandMessage(FlowDeleteRequest)
-alt successful case
-    note right of CrudBolt: flowCache.deleteFlow(flowId)
-    note right of CrudBolt: deallocate flow's cookie
-    note right of CrudBolt: deallocate transit VLAN
-    note right of CrudBolt: deallocate meter
-    opt if reverse flow is not null
-        note right of CrudBolt: deallocate transit VLAN (reverse)
-        note right of CrudBolt: deallocate meter (reverse)
-    end
-    note right of CrudBolt: new FlowInfoData(flow) operation=DELETE
-    CrudBolt -> kilda.topo.cache: InfoMessage(FlowInfoData)
-
-    note right of CrudBolt: new FlowResponse
-    CrudBolt -> NorthboundReplyBolt: InfoMessage(FlowResponse)
-else CacheException from flowCache.deleteFlow type=NOT_FOUND
-    note right of CrudBolt: new ErrorMessage
-    CrudBolt -> ErrorBolt: ErrorMessage
-end
-
+[Diagram text](https://github.com/telstra/open-kilda/blob/develop/docs/design/usecase/flow-crud-delete-full.txt)
 
 ### Flow Update
+TBD
 
 ### Flow Read
+TBD
 
    
