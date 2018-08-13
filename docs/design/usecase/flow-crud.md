@@ -32,7 +32,6 @@ of flow commands to the openflow speaker (floodlight) to install the flow rules 
 
 ![Flow Creation](./flow-crud-create.png "Flow Creation")
 ![Flow Creation](./flow-crud-create-full.png "Flow Creation (full)")
-![Flow Delete](./flow-crud-delete-full.png "Flow Delete (full)")
 
 #### Diagram Text
 
@@ -57,6 +56,38 @@ NB API->User: result
 ```     
  
 ### Flow Deletion
+![Flow Delete](./flow-crud-delete-full.png "Flow Delete (full)")
+
+#### Diagram Text
+
+This text can be used at https://www.websequencediagrams.com/
+
+```
+title Flow Creation
+
+Client -> NB: DELETE /flows/{flow-id}
+NB -> kilda.flow: CommandMessage(FlowDeleteRequest)
+kilda.flow -> SplitterBolt: CommandMessage(FlowDeleteRequest)
+SplitterBolt -> CrudBolt: CommandMessage(FlowDeleteRequest)
+alt successful case
+    note right of CrudBolt: flowCache.deleteFlow(flowId)
+    note right of CrudBolt: deallocate flow's cookie
+    note right of CrudBolt: deallocate transit VLAN
+    note right of CrudBolt: deallocate meter
+    opt if reverse flow is not null
+        note right of CrudBolt: deallocate transit VLAN (reverse)
+        note right of CrudBolt: deallocate meter (reverse)
+    end
+    note right of CrudBolt: new FlowInfoData(flow) operation=DELETE
+    CrudBolt -> kilda.topo.cache: InfoMessage(FlowInfoData)
+
+    note right of CrudBolt: new FlowResponse
+    CrudBolt -> NorthboundReplyBolt: InfoMessage(FlowResponse)
+else CacheException from flowCache.deleteFlow type=NOT_FOUND
+    note right of CrudBolt: new ErrorMessage
+    CrudBolt -> ErrorBolt: ErrorMessage
+end
+
 
 ### Flow Update
 
